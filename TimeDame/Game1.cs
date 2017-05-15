@@ -39,7 +39,7 @@ namespace Game2
         StopWatchWithOffset[] swPartTotals = new StopWatchWithOffset[numCand];
 
         string[] codgers = { "Andrew", "Kirsty", "Carwyn", "Leanne", "Neil", "ploo" }; //new string[5];
-        string[] geezers = { "Nathan", "Leanne", "Andrew", "Carwyn", "Kirsty", "Alice" };
+        string[] geezers = { "Carwyn", "Andrew", "Leanne", "Neil", "Mark" };
 
         bool[] count = { false, false, false, false, false, false };
         string[] percs = { "0%", "0%", "0%", "0%", "0%", "0%" };
