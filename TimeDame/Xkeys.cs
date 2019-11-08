@@ -29,6 +29,7 @@ namespace Game2
             new int[] {55 },//,54,62,63 },
             new int[] {71},//,70,78,79 },
             new int[] {87},
+            new int[] {103},
             new int[] {119}
         };
 

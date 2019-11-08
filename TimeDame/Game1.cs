@@ -28,7 +28,7 @@ namespace Game2
         private SpriteFont font1, font2, font3;
         TimeSpan tSpan;
         DateTime startTime;
-        static int numCand = 6;
+        static int numCand = 20;
         DateTime[] clotsLast = new DateTime[numCand];
         TimeSpan[] clots = new TimeSpan[numCand];
         TimeSpan[] clotsPartTotal = new TimeSpan[numCand];
@@ -39,10 +39,10 @@ namespace Game2
         StopWatchWithOffset[] swPartTotals = new StopWatchWithOffset[numCand];
 
         string[] codgers = { "Andrew", "Kirsty", "Carwyn", "Leanne", "Neil", "ploo" }; //new string[5];
-        string[] geezers = { "Carwyn", "Andrew", "Leanne", "Neil", "Mark", "Kirsty" };
+        string[] geezers = {  };
 
-        bool[] count = { false, false, false, false, false, false, false };
-        string[] percs = { "0%", "0%", "0%", "0%", "0%", "0%", "0%" };
+        bool[] count = { false, false, false, false, false, false, false, false, false, false, false, false, false, false };
+        string[] percs = { "0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%" };
         int h = 400;
         int ht = 1024;
         int wd = 1920;
@@ -147,7 +147,7 @@ namespace Game2
                 Xkeys.BLAllOff();
             }
             catch { }
-
+            LoadConfig();
             for (int i = 0; i < numCand; i++)
             {
                 swTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
@@ -164,6 +164,19 @@ namespace Game2
             //clots[2] = TimeSpan.Parse("00:03:55");
             previousState = Keyboard.GetState();
             resetClock();
+        }
+
+        private void LoadConfig()
+        {
+            //throw new NotImplementedException();
+
+            Debug.WriteLine("Load Config");
+            int j = 0;
+            string[] lines = new string[5]; ;
+            foreach (string line in File.ReadLines("Content\\Config.txt")) lines[j++] = line;
+            
+            geezers = lines[0].Split(',');
+            numCand = geezers.Length;
         }
 
         /// <summary>
@@ -374,21 +387,7 @@ namespace Game2
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D1) & !previousState.IsKeyDown(Keys.D1))
                 {
-                    count[0] = !count[0];
-                    if (count[0])
-                    {
-                        swTotals[0].Startw();
-                        swPartTotals[0].Startw();
-                        Xkeys.BLOn(0);
-                    }
-                    else
-                    {
-                        swTotals[0].Stopw();
-                        swPartTotals[0].Stopw();
-                        saveState();
-                        Xkeys.BLOff(0);
-                    }
-                    //print_state();
+                    SartStopTimer(0);
                 }
 
                 //if (count[0]) clots[0] = (DateTime.Now.Subtract(clotsLast[0]));//.Add(clotsTotal[0]);
@@ -396,62 +395,21 @@ namespace Game2
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D2) & !previousState.IsKeyDown(Keys.D2))
                 {
-                    count[1] = !count[1];
-                    if (count[1])
-                    {
-                        swTotals[1].Startw();
-                        swPartTotals[1].Startw();
-                        Xkeys.BLOn(1);
-                    }
-                    else
-                    {
-                        swTotals[1].Stopw();
-                        swPartTotals[1].Stopw();
-                        saveState();
-                        Xkeys.BLOff(1);
-                    }
-                    //print_state();
+                    SartStopTimer(1);
                 }
 
                 //if (count[1]) clots[1] = (DateTime.Now.Subtract(clotsLast[1]));//.Add(clotsTotal[1]);
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D3) & !previousState.IsKeyDown(Keys.D3))
                 {
-                    count[2] = !count[2];
-                    if (count[2])
-                    {
-                        swTotals[2].Startw();
-                        swPartTotals[2].Startw();
-                        Xkeys.BLOn(2);
-                    }
-                    else
-                    {
-                        swTotals[2].Stopw();
-                        swPartTotals[2].Stopw();
-                        saveState();
-                        Xkeys.BLOff(2);
-                    }
-                    //print_state();
+                    SartStopTimer(2);
                 }
                 // if (count[2]) clots[2] = (DateTime.Now.Subtract(clotsLast[2]));//.Add(clotsTotal[2]);
 
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D4) & !previousState.IsKeyDown(Keys.D4))
                 {
-                    count[3] = !count[3];
-                    if (count[3])
-                    {
-                        swTotals[3].Startw();
-                        swPartTotals[3].Startw();
-                        Xkeys.BLOn(3);
-                    }
-                    else
-                    {
-                        swTotals[3].Stopw();
-                        swPartTotals[3].Stopw();
-                        saveState();
-                        Xkeys.BLOff(3);
-                    }
+                    SartStopTimer(3);
                 }
                 //print_state();
                 //if (count[3]) clots[3] = (DateTime.Now.Subtract(clotsLast[3]));//.Add(clotsTotal[3]);
@@ -459,59 +417,24 @@ namespace Game2
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D5) & !previousState.IsKeyDown(Keys.D5))
                 {
-                    count[4] = !count[4];
-                    if (count[4])
-                    {
-                        swTotals[4].Startw();
-                        swPartTotals[4].Startw();
-                        Xkeys.BLOn(4);
-                    }
-                    else
-                    {
-                        swTotals[4].Stopw();
-                        swPartTotals[4].Stopw();
-                        saveState();
-                        Xkeys.BLOff(4);
-                    }
-                    //print_state();
+                    SartStopTimer(4);
                 }
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D6) & !previousState.IsKeyDown(Keys.D6))
                 {
-                    count[5] = !count[5];
-                    if (count[5])
-                    {
-                        swTotals[5].Startw();
-                        swPartTotals[5].Startw();
-                        Xkeys.BLOn(5);
-                    }
-                    else
-                    {
-                        swTotals[5].Stopw();
-                        swPartTotals[5].Stopw();
-                        saveState();
-                        Xkeys.BLOff(5);
-                    }
-                    //print_state();
+                    SartStopTimer(5);
                 }
-                //if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D6) & !previousState.IsKeyDown(Keys.D6))
-                //{
-                //    count[6] = !count[6];
-                //    if (count[6])
-                //    {
-                //        swTotals[6].Startw();
-                //        swPartTotals[6].Startw();
-                //        Xkeys.BLOn(6);
-                //    }
-                //    else
-                //    {
-                //        swTotals[6].Stopw();
-                //        swPartTotals[6].Stopw();
-                //        saveState();
-                //        Xkeys.BLOff(6);
-                //    }
-                //    //print_state();
-                //}
+
+                if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D7) & !previousState.IsKeyDown(Keys.D7))
+                {
+                    SartStopTimer(6);
+                }
+
+                if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D8) & !previousState.IsKeyDown(Keys.D8))
+                {
+                    SartStopTimer(7);
+                }
+                
                 //§§ if (count[4]) clots[4] = (DateTime.Now.Subtract(clotsLast[4]));//1.Add(clotsTotal[4]);
 
                 totalTime = TimeSpan.Parse("00:00:00:00");
@@ -588,6 +511,25 @@ namespace Game2
             cl0 = clots[0].ToString();
             base.Update(gameTime);
             previousState = state;
+        }
+
+        private void SartStopTimer(int i)
+        {
+            count[i] = !count[i];
+            if (count[i])
+            {
+                swTotals[i].Startw();
+                swPartTotals[i].Startw();
+                Xkeys.BLOn(i);
+            }
+            else
+            {
+                swTotals[i].Stopw();
+                swPartTotals[i].Stopw();
+                saveState();
+                Xkeys.BLOff(i);
+            }
+            //print_state();
         }
 
         private void resetClock()
