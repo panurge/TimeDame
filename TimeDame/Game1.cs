@@ -177,6 +177,9 @@ namespace Game2
             
             geezers = lines[0].Split(',');
             numCand = geezers.Length;
+            //string[] res = lines[1].Split(',');
+            //wd = Int32.Parse(res[0]);
+            //ht = Int32.Parse(res[1]);
         }
 
         /// <summary>
@@ -197,7 +200,6 @@ namespace Game2
 
             itvlogo = Content.Load<Texture2D>("Graphics\\itv-Cymru-Wales-RGB-MultiColour-Neg"); // change these names to the names of your images
 
-
             // Use the name of your sprite font file here instead of 'Score'.
             //player.Initialize(Content.Load<Texture2D>("Graphics\\player"), playerPosition);
         }
@@ -206,6 +208,7 @@ namespace Game2
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
         /// </summary>
+
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
@@ -216,6 +219,7 @@ namespace Game2
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
         protected override void Update(GameTime gameTime)
         {
             KeyboardState state = Keyboard.GetState();
@@ -226,56 +230,45 @@ namespace Game2
             }
             if (!inload)
             {
-
                 if (state.IsKeyDown(Keys.NumPad0) & !previousState.IsKeyDown(Keys.NumPad0)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     temptime += "0";
-
                 }
                 if (state.IsKeyDown(Keys.NumPad1) & !previousState.IsKeyDown(Keys.NumPad1)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     temptime += "1";
-
                 }
                 if (state.IsKeyDown(Keys.NumPad2) & !previousState.IsKeyDown(Keys.NumPad2)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     temptime += "2";
-
                 }
                 if (state.IsKeyDown(Keys.NumPad3) & !previousState.IsKeyDown(Keys.NumPad3)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     temptime += "3";
-
                 }
                 if (state.IsKeyDown(Keys.NumPad4) & !previousState.IsKeyDown(Keys.NumPad4)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     temptime += "4";
-
                 }
                 if (state.IsKeyDown(Keys.NumPad5) & !previousState.IsKeyDown(Keys.NumPad5)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     temptime += "5";
-
                 }
                 if (state.IsKeyDown(Keys.NumPad6) & !previousState.IsKeyDown(Keys.NumPad6)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     temptime += "6";
-
                 }
                 if (state.IsKeyDown(Keys.NumPad7) & !previousState.IsKeyDown(Keys.NumPad7)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     temptime += "7";
-
                 }
                 if (state.IsKeyDown(Keys.NumPad8) & !previousState.IsKeyDown(Keys.NumPad8)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     temptime += "8";
-
                 }
                 if (state.IsKeyDown(Keys.NumPad9) & !previousState.IsKeyDown(Keys.NumPad9)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     temptime += "9";
-
                 }
                 if (state.IsKeyDown(Keys.Enter) & !previousState.IsKeyDown(Keys.Enter)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
@@ -300,8 +293,8 @@ namespace Game2
                     }
                     catch { }
                     Debug.WriteLine(counterduration);
-
                 }
+
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.R) & !previousState.IsKeyDown(Keys.R)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     Debug.WriteLine("Reset");
@@ -325,9 +318,7 @@ namespace Game2
                         //swTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
                         swPartTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
                         // percs[i] = "0%";
-
                     }
-
                     // totalTime = TimeSpan.Parse("0");
                 }
 
@@ -335,27 +326,21 @@ namespace Game2
                 {
                     Debug.WriteLine("Clock On/Off");
                     clockOnOff = !clockOnOff;
-                  
                 }
-
-
 
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.L) & !previousState.IsKeyDown(Keys.L)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     loadState();
-
                 }
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.I) & !previousState.IsKeyDown(Keys.I)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     logoOnOff = !logoOnOff;
-
                 }
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.T) & !previousState.IsKeyDown(Keys.T)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     Debug.WriteLine("Cntrl+T");
                     saveState();
                     loadTotals();
-
                 }
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.F) & !previousState.IsKeyDown(Keys.F)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
@@ -455,7 +440,6 @@ namespace Game2
                     startTime = DateTime.Now.Add(TimeSpan.Parse(counterduration));
                     //startClock();
                     Xkeys.BLOn(6);
-
                 }
 
                 if (state.IsKeyDown(Keys.G) & !previousState.IsKeyDown(Keys.G)) // & state.IsKeyDown(Keys.LeftAlt)
@@ -473,7 +457,6 @@ namespace Game2
 
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.A) & !previousState.IsKeyDown(Keys.A)) // & state.IsKeyDown(XnaKeys.LeftAlt)
                 {
-
                     Load d = new Load();               
                    //d.CreateControl();
                     d.ShowDialog();
@@ -489,7 +472,6 @@ namespace Game2
                     d.Dispose();
                 }
 
-
                 if (countdown == true)
                 {
                     ploo = startTime.Subtract(DateTime.Now);
@@ -497,7 +479,6 @@ namespace Game2
 
                     if ((ploo.Minutes * 60 + ploo.Seconds) <= 10)
                     {
-
                         if (ploo.Milliseconds > 500) clockColor = Color.White;
                         else clockColor = Color.Red;
                     }
@@ -529,7 +510,7 @@ namespace Game2
                 saveState();
                 Xkeys.BLOff(i);
             }
-            //print_state();
+            print_state();
         }
 
         private void resetClock()
@@ -551,7 +532,7 @@ namespace Game2
             string last = File.ReadLines("log.txt").Last();
             timeParse(last);
         }
-
+        
         private void timeParse(string timeStr)
         {
             string[] last = timeStr.Split(',');
@@ -590,6 +571,7 @@ namespace Game2
             }
             inload = false;
         }
+
         private void Load_ScreenRes()
         {
             Debug.WriteLine("Load Screen Resolution");
@@ -600,6 +582,7 @@ namespace Game2
             wd = int.Parse(res[0]);
             ht = int.Parse(res[1]);
         }
+
         private void loadTotals()
         {
             Debug.WriteLine("Load Totals");
@@ -617,19 +600,13 @@ namespace Game2
             }
             for (int i = 0; i < numCand; i++)
             {
-
                 if (totalTime.TotalMilliseconds > 0) percs[i] = Math.Round(((((swTotals[i]).ElapsedTimeSpan.TotalMilliseconds) * 1000) / ((totalTime.TotalMilliseconds))) / 10f).ToString() + "%";
-
                 //Debug.WriteLine(clotsTotal[i] + ", " + percs[i]);
-
             }
-
         }
-
 
         private void saveState()
         {
-
             Debug.WriteLine("Save last state");
             using (StreamWriter w = File.AppendText("log.txt"))
             {
@@ -651,6 +628,7 @@ namespace Game2
             //    //DumpLog(r);
             //}
         }
+
         public static void DumpLog(StreamReader r)
         {
             string line;
@@ -663,6 +641,7 @@ namespace Game2
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Black);
@@ -678,12 +657,9 @@ namespace Game2
                                    new Vector2(wd / 2 - (font1.MeasureString(startTime.Subtract(ploo).ToString(@"mm\:ss")).X / 2),
                                                ht / 3 - (font1.MeasureString(startTime.Subtract(ploo).ToString(@"mm\:ss")).Y / 2)), clockColor);
 
-
             for (int i = 0; i < numCand; i++)
             {
-
                 spriteBatch.DrawString(font3, geezers[i], new Vector2((2 * i + 1) * wd / (2 * numCand) - font3.MeasureString(geezers[i]).X / 2, h + 30), Color.White);
-
             }
 
             for (int i = 0; i < numCand; i++)
@@ -691,12 +667,10 @@ namespace Game2
                 spriteBatch.DrawString(font2, swPartTotals[i].ElapsedTimeSpan.ToString(@"mm\:ss"), new Vector2((2 * i + 1) * wd / (2 * numCand) - font2.MeasureString(swPartTotals[i].Elapsed.ToString(@"mm\:ss")).X / 2, h + 77), Color.White);
             }
 
-
             for (int i = 0; i < numCand; i++)
             {
                 spriteBatch.DrawString(font2, percs[i], new Vector2((2 * i + 1) * wd / (2 * numCand) - font2.MeasureString(percs[i]).X / 2, h + 270), Color.White);
             }
-  
 
             for (int i = 0; i < numCand; i++)
             {
@@ -707,25 +681,23 @@ namespace Game2
             base.Draw(gameTime);
         }
 
- 
         protected void draw_boxes()
         {
             Primitives2D.DrawLine(spriteBatch, new Vector2(0, h), new Vector2(wd, h), Color.White, 5.0f);
             for (int i = 0; i <= numCand; i++)
             {
-
                 Primitives2D.DrawLine(spriteBatch, new Vector2(i * wd / numCand, h), new Vector2(i * wd / numCand, ht), Color.White, 5.0f);
-
             }
         }
+
         public void print_state()
         {
             for (int i = 0; i < 5; i++)
             {
                 Console.WriteLine(clots[i].ToString() + ", " + clotsTotal[i].ToString());
-
             }
         }
+
         public static void Log(string logMessage, TextWriter w)
         {
             w.Write("\r\nLog Entry : ");
@@ -736,6 +708,7 @@ namespace Game2
             w.WriteLine("-------------------------------");
         }
     }
+
     public class StopWatchWithOffset : Stopwatch
     {
         private Stopwatch _stopwatch = null;
