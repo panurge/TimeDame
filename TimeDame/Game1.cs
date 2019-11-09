@@ -320,7 +320,7 @@ namespace Game2
                         // percs[i] = "0%";
                     }
                     // totalTime = TimeSpan.Parse("0");
-                    saveState();
+                    //saveState();
                 }
 
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.K) & !previousState.IsKeyDown(Keys.K)) // & state.IsKeyDown(Keys.LeftAlt)
@@ -743,6 +743,7 @@ namespace Game2
         public void Resetw()
         {
             _stopwatch.Reset();
+            _offsetTimeSpan = TimeSpan.Parse("00:00:00:00");
         }
         public TimeSpan ElapsedTimeSpan
         {
