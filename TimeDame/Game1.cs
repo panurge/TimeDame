@@ -300,8 +300,8 @@ namespace Game2
                     Debug.WriteLine("Reset");
                     for (int i = 0; i < numCand; i++)
                     {
-                        swTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
-                        swPartTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
+                        swTotals[i].Resetw(); //= new StopWatchWithOffset(TimeSpan.FromSeconds(0));
+                        swPartTotals[i].Resetw(); //= new StopWatchWithOffset(TimeSpan.FromSeconds(0));
                         percs[i] = "0%";
 
                     }
@@ -316,10 +316,11 @@ namespace Game2
                     for (int i = 0; i < numCand; i++)
                     {
                         //swTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
-                        swPartTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
+                        swPartTotals[i].Resetw();// = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
                         // percs[i] = "0%";
                     }
                     // totalTime = TimeSpan.Parse("0");
+                    saveState();
                 }
 
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.K) & !previousState.IsKeyDown(Keys.K)) // & state.IsKeyDown(Keys.LeftAlt)
@@ -372,7 +373,7 @@ namespace Game2
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D1) & !previousState.IsKeyDown(Keys.D1))
                 {
-                    SartStopTimer(0);
+                    StartStopTimer(0);
                 }
 
                 //if (count[0]) clots[0] = (DateTime.Now.Subtract(clotsLast[0]));//.Add(clotsTotal[0]);
@@ -380,21 +381,21 @@ namespace Game2
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D2) & !previousState.IsKeyDown(Keys.D2))
                 {
-                    SartStopTimer(1);
+                    StartStopTimer(1);
                 }
 
                 //if (count[1]) clots[1] = (DateTime.Now.Subtract(clotsLast[1]));//.Add(clotsTotal[1]);
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D3) & !previousState.IsKeyDown(Keys.D3))
                 {
-                    SartStopTimer(2);
+                    StartStopTimer(2);
                 }
                 // if (count[2]) clots[2] = (DateTime.Now.Subtract(clotsLast[2]));//.Add(clotsTotal[2]);
 
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D4) & !previousState.IsKeyDown(Keys.D4))
                 {
-                    SartStopTimer(3);
+                    StartStopTimer(3);
                 }
                 //print_state();
                 //if (count[3]) clots[3] = (DateTime.Now.Subtract(clotsLast[3]));//.Add(clotsTotal[3]);
@@ -402,22 +403,22 @@ namespace Game2
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D5) & !previousState.IsKeyDown(Keys.D5))
                 {
-                    SartStopTimer(4);
+                    StartStopTimer(4);
                 }
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D6) & !previousState.IsKeyDown(Keys.D6))
                 {
-                    SartStopTimer(5);
+                    StartStopTimer(5);
                 }
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D7) & !previousState.IsKeyDown(Keys.D7))
                 {
-                    SartStopTimer(6);
+                    StartStopTimer(6);
                 }
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D8) & !previousState.IsKeyDown(Keys.D8))
                 {
-                    SartStopTimer(7);
+                    StartStopTimer(7);
                 }
                 
                 //§§ if (count[4]) clots[4] = (DateTime.Now.Subtract(clotsLast[4]));//1.Add(clotsTotal[4]);
@@ -494,23 +495,27 @@ namespace Game2
             previousState = state;
         }
 
-        private void SartStopTimer(int i)
+        private void StartStopTimer(int i)
         {
-            count[i] = !count[i];
-            if (count[i])
+            if (i < numCand)
             {
-                swTotals[i].Startw();
-                swPartTotals[i].Startw();
-                Xkeys.BLOn(i);
+
+                count[i] = !count[i];
+                if (count[i])
+                {
+                    swTotals[i].Startw();
+                    swPartTotals[i].Startw();
+                    Xkeys.BLOn(i);
+                }
+                else
+                {
+                    swTotals[i].Stopw();
+                    swPartTotals[i].Stopw();
+                    saveState();
+                    Xkeys.BLOff(i);
+                }
             }
-            else
-            {
-                swTotals[i].Stopw();
-                swPartTotals[i].Stopw();
-                saveState();
-                Xkeys.BLOff(i);
-            }
-            print_state();
+            //print_state();
         }
 
         private void resetClock()
@@ -540,19 +545,24 @@ namespace Game2
             for (int i = 0; i < numCand; i++)
             {
                 count[i] = false;
+                swTotals[i].Resetw();
+                //swTotals[i] = new StopWatchWithOffset(TimeSpan.Parse("00:00:00:00"));//.ElapsedTimeSpan = TimeSpan.Parse("00:00:00:00");
+                Debug.WriteLine("Totals before " + last[i + 1] + ", " + swTotals[i].ElapsedTimeSpan + ", " + percs[i]);
                 swTotals[i].ElapsedTimeSpan = TimeSpan.Parse(last[i + 1]);// TimeSpan.Parse("00:00:00:00");
                                                                           // if (totalTime.Ticks > 0) percs[i] = Math.Round((((clots[i].Ticks) * 1000) / ((totalTime.Ticks))) / 10f).ToString() + "%";
                 if (totalTime.TotalMilliseconds > 0) percs[i] = Math.Round(((((swTotals[i]).ElapsedTimeSpan.TotalMilliseconds) * 1000) / ((totalTime.TotalMilliseconds))) / 10f).ToString() + "%";
 
                 else percs[i] = "0%";
-                Debug.WriteLine(swTotals[i] + ", " + percs[i]);
+                Debug.WriteLine("Totals " + last[i+1] + ", " + swTotals[i].ElapsedTimeSpan + ", " + percs[i]);
             }
             for (int i = 0; i < numCand; i++)
             {
+                swPartTotals[i].Resetw();
+                //swPartTotals[i] = new StopWatchWithOffset(TimeSpan.Parse("00:00:00:00"));
                 swPartTotals[i].ElapsedTimeSpan = TimeSpan.Parse(last[i + numCand + 1]);// TimeSpan.Parse("00:00:00:00");+
                 //clots[i] = clotsTotal[i];
                 //if (totalTime.Ticks > 0) percs[i] = Math.Round((((clots[i].Ticks) * 1000) / ((totalTime.Ticks))) / 10f).ToString() + "%";
-                Debug.WriteLine(swPartTotals[i] + ", " + percs[i]);
+                Debug.WriteLine("Part Totals " + swPartTotals[i].ElapsedTimeSpan + ", " + percs[i]);
             }
             for (int i = 0; i < numCand; i++)
             {
@@ -595,7 +605,8 @@ namespace Game2
             for (int i = 0; i < numCand; i++)
             {
                 count[i] = false;
-                swPartTotals[i] = new StopWatchWithOffset(TimeSpan.Parse("00:" + partTotals[i]));// TimeSpan.Parse("00:00:00:00");
+                swPartTotals[i].Resetw(); // = new StopWatchWithOffset(TimeSpan.Parse("00:" + partTotals[i]));// TimeSpan.Parse("00:00:00:00");
+                swPartTotals[i].ElapsedTimeSpan = TimeSpan.Parse("00:" + partTotals[i]);// TimeSpan.Parse("00:00:00:00");
                 //totalTime = totalTime.Add(clots[i]);
             }
             for (int i = 0; i < numCand; i++)
@@ -729,7 +740,10 @@ namespace Game2
         {
             _stopwatch.Stop();
         }
-
+        public void Resetw()
+        {
+            _stopwatch.Reset();
+        }
         public TimeSpan ElapsedTimeSpan
         {
             get
