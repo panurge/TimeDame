@@ -28,7 +28,7 @@ namespace Game2
         private SpriteFont font1, font2, font3;
         TimeSpan tSpan;
         DateTime startTime;
-        static int numCand = 5;
+        static int numCand = 7;
         DateTime[] clotsLast = new DateTime[numCand];
         TimeSpan[] clots = new TimeSpan[numCand];
         TimeSpan[] clotsPartTotal = new TimeSpan[numCand];
@@ -39,10 +39,10 @@ namespace Game2
         StopWatchWithOffset[] swPartTotals = new StopWatchWithOffset[numCand];
 
         string[] codgers = { "Andrew", "Kirsty", "Carwyn", "Leanne", "Neil", "ploo" }; //new string[5];
-        string[] geezers = { "Carwyn", "Andrew", "Leanne", "Neil", "Mark" };
+        string[] geezers = { "Carwyn", "Andrew", "Leanne", "Neil", "Mark", "Andrew", "Kirsty", "Carwyn", "Leanne", "Neil", "ploo" };
 
-        bool[] count = { false, false, false, false, false, false };
-        string[] percs = { "0%", "0%", "0%", "0%", "0%", "0%" };
+        bool[] count = { false, false, false, false, false, false, false, false, false };
+        string[] percs = { "0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%" };
         int h = 400;
         int ht = 1024;
         int wd = 1920;
@@ -128,7 +128,7 @@ namespace Game2
             };
 
             mailMessage.To.Add("keith.jones@itv.com");
-            mailMessage.To.Add("Lynwen.James@itv.com");
+            //mailMessage.To.Add("Lynwen.James@itv.com");
 
             smtpClient.Send(mailMessage);
         }
@@ -289,20 +289,10 @@ namespace Game2
                     Debug.WriteLine(counterduration);
 
                 }
-                if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.R) & !previousState.IsKeyDown(Keys.R)) // & state.IsKeyDown(Keys.LeftAlt)
-                {
-                    Debug.WriteLine("Reset");
-                    for (int i = 0; i < numCand; i++)
-                    {
-                        swTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
-                        swPartTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
-                        percs[i] = "0%";
 
-                    }
-                    totalTime = TimeSpan.Parse("0");
-                }
+                
 
-
+                //Cntrl P
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.P) & !previousState.IsKeyDown(Keys.P)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     Debug.WriteLine("Prog Part");
@@ -310,13 +300,15 @@ namespace Game2
                     for (int i = 0; i < numCand; i++)
                     {
                         //swTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
-                        swPartTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
+                        swPartTotals[i].Resetw();
                         // percs[i] = "0%";
 
                     }
 
                     // totalTime = TimeSpan.Parse("0");
                 }
+
+                //Cntrl K Clock On/Off
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.K) & !previousState.IsKeyDown(Keys.K)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     Debug.WriteLine("Clock On/Off");
@@ -325,17 +317,21 @@ namespace Game2
                 }
 
 
-
+                //Cntrl L Load State
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.L) & !previousState.IsKeyDown(Keys.L)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     loadState();
 
                 }
+
+                //Cntrl I Logo On or Off
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.I) & !previousState.IsKeyDown(Keys.I)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     logoOnOff = !logoOnOff;
 
                 }
+
+                //Cntrl T Load Totals
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.T) & !previousState.IsKeyDown(Keys.T)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     Debug.WriteLine("Cntrl+T");
@@ -343,6 +339,67 @@ namespace Game2
                     loadTotals();
 
                 }
+                if (state.IsKeyDown(Keys.G) & !previousState.IsKeyDown(Keys.G)) // & state.IsKeyDown(Keys.LeftAlt)
+                {
+                    //loadState();
+                }
+                if (state.IsKeyDown(Keys.S) & !previousState.IsKeyDown(Keys.S)) // & state.IsKeyDown(Keys.LeftAlt)
+                { 
+                    //Start main clock 
+                    Debug.WriteLine("In Start Main Clock");
+                    countdown = true;
+                    clockOnOff = true;
+                    startTime = DateTime.Now.Add(TimeSpan.Parse(counterduration));
+                    //startClock();
+                    Xkeys.BLOn(6);
+
+                }
+
+                //if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.R) & !previousState.IsKeyDown(Keys.R)) // & state.IsKeyDown(Keys.LeftAlt)
+                    if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.R) & !previousState.IsKeyDown(Keys.R)) // & state.IsKeyDown(Keys.LeftAlt)
+                    {
+                        //reset main clock 
+                        Debug.WriteLine("In Reset Main Clock");
+                    countdown = false;
+                    clockColor = Color.White;
+                    clockOnOff = false;
+                    resetClock();
+                }
+
+                ////Cntrl R
+                //if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.R) & !previousState.IsKeyDown(Keys.R)) // & state.IsKeyDown(Keys.LeftAlt)
+                //{
+                //    Debug.WriteLine("Reset");
+                //    for (int i = 0; i < numCand; i++)
+                //    {
+                //        swTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
+                //        swPartTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
+                //        percs[i] = "0%";
+
+                //    }
+                //    totalTime = TimeSpan.Parse("0");
+                //}
+
+                if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.A) & !previousState.IsKeyDown(Keys.A)) // & state.IsKeyDown(XnaKeys.LeftAlt)
+                {
+
+                    Load d = new Load();
+                    //d.CreateControl();
+                    d.ShowDialog();
+                    //d.Show();
+
+                    MessageBoxK m = new MessageBoxK();
+                    m.message = d.opgave;
+                    m.ShowDialog();
+                    if (d.opgave != null)
+                    {
+                        timeParse(d.opgave);
+                    }
+                    d.Dispose();
+                }
+
+
+                //Cntrl F Toggle full frame
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.F) & !previousState.IsKeyDown(Keys.F)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     if (fullscreen == true)
@@ -493,6 +550,24 @@ namespace Game2
                     }
                     //print_state();
                 }
+                if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D7) & !previousState.IsKeyDown(Keys.D6))
+                {
+                    count[6] = !count[6];
+                    if (count[6])
+                    {
+                        swTotals[6].Startw();
+                        swPartTotals[6].Startw();
+                        Xkeys.BLOn(6);
+                    }
+                    else
+                    {
+                        swTotals[6].Stopw();
+                        swPartTotals[6].Stopw();
+                        saveState();
+                        Xkeys.BLOff(6);
+                    }
+                    //print_state();
+                }
                 //§§ if (count[4]) clots[4] = (DateTime.Now.Subtract(clotsLast[4]));//1.Add(clotsTotal[4]);
 
                 totalTime = TimeSpan.Parse("00:00:00:00");
@@ -506,47 +581,8 @@ namespace Game2
                 }
 
 
-                if (state.IsKeyDown(Keys.S) & !previousState.IsKeyDown(Keys.S)) // & state.IsKeyDown(Keys.LeftAlt)
-                {
-                    countdown = true;
-                    clockOnOff = true;
-                    startTime = DateTime.Now.Add(TimeSpan.Parse(counterduration));
-                    //startClock();
-                    Xkeys.BLOn(6);
-
-                }
-
-                if (state.IsKeyDown(Keys.G) & !previousState.IsKeyDown(Keys.G)) // & state.IsKeyDown(Keys.LeftAlt)
-                {
-                    //loadState();
-                }
-
-                if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.R) & !previousState.IsKeyDown(Keys.R)) // & state.IsKeyDown(Keys.LeftAlt)
-                {
-                    countdown = false;
-                    clockColor = Color.White;
-                    clockOnOff = false;
-                    resetClock();
-                }
-
-                if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.A) & !previousState.IsKeyDown(Keys.A)) // & state.IsKeyDown(XnaKeys.LeftAlt)
-                {
-
-                    Load d = new Load();               
-                   //d.CreateControl();
-                    d.ShowDialog();
-                    //d.Show();
-
-                    MessageBoxK m = new MessageBoxK();
-                    m.message = d.opgave;
-                    m.ShowDialog();
-                    if (d.opgave != null)
-                    {
-                        timeParse(d.opgave);
-                    }
-                    d.Dispose();
-                }
-
+                
+                
 
                 if (countdown == true)
                 {
@@ -598,6 +634,7 @@ namespace Game2
             for (int i = 0; i < numCand; i++)
             {
                 count[i] = false;
+                swTotals[i].Resetw();
                 swTotals[i].ElapsedTimeSpan = TimeSpan.Parse(last[i + 1]);// TimeSpan.Parse("00:00:00:00");
                                                                           // if (totalTime.Ticks > 0) percs[i] = Math.Round((((clots[i].Ticks) * 1000) / ((totalTime.Ticks))) / 10f).ToString() + "%";
                 if (totalTime.TotalMilliseconds > 0) percs[i] = Math.Round(((((swTotals[i]).ElapsedTimeSpan.TotalMilliseconds) * 1000) / ((totalTime.TotalMilliseconds))) / 10f).ToString() + "%";
@@ -607,6 +644,7 @@ namespace Game2
             }
             for (int i = 0; i < numCand; i++)
             {
+                swPartTotals[i].Resetw();
                 swPartTotals[i].ElapsedTimeSpan = TimeSpan.Parse(last[i + numCand + 1]);// TimeSpan.Parse("00:00:00:00");+
                 //clots[i] = clotsTotal[i];
                 //if (totalTime.Ticks > 0) percs[i] = Math.Round((((clots[i].Ticks) * 1000) / ((totalTime.Ticks))) / 10f).ToString() + "%";
@@ -794,6 +832,11 @@ namespace Game2
         public void Stopw()
         {
             _stopwatch.Stop();
+        }
+        public void Resetw()
+        {
+            _stopwatch.Reset();
+            _offsetTimeSpan = TimeSpan.FromSeconds(0);
         }
 
         public TimeSpan ElapsedTimeSpan
