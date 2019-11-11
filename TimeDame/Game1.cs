@@ -430,20 +430,8 @@ namespace Game2
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D1) & !previousState.IsKeyDown(Keys.D1))
                 {
-                    count[0] = !count[0];
-                    if (count[0])
-                    {
-                        swTotals[0].Startw();
-                        swPartTotals[0].Startw();
-                        Xkeys.BLOn(0);
-                    }
-                    else
-                    {
-                        swTotals[0].Stopw();
-                        swPartTotals[0].Stopw();
-                        saveState();
-                        Xkeys.BLOff(0);
-                    }
+                    StopStartCandTimer(0);
+                    
                     //print_state();
                 }
 
@@ -452,41 +440,16 @@ namespace Game2
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D2) & !previousState.IsKeyDown(Keys.D2))
                 {
-                    count[1] = !count[1];
-                    if (count[1])
-                    {
-                        swTotals[1].Startw();
-                        swPartTotals[1].Startw();
-                        Xkeys.BLOn(1);
-                    }
-                    else
-                    {
-                        swTotals[1].Stopw();
-                        swPartTotals[1].Stopw();
-                        saveState();
-                        Xkeys.BLOff(1);
-                    }
-                    //print_state();
+                    StopStartCandTimer(1);
+                    
                 }
 
                 //if (count[1]) clots[1] = (DateTime.Now.Subtract(clotsLast[1]));//.Add(clotsTotal[1]);
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D3) & !previousState.IsKeyDown(Keys.D3))
                 {
-                    count[2] = !count[2];
-                    if (count[2])
-                    {
-                        swTotals[2].Startw();
-                        swPartTotals[2].Startw();
-                        Xkeys.BLOn(2);
-                    }
-                    else
-                    {
-                        swTotals[2].Stopw();
-                        swPartTotals[2].Stopw();
-                        saveState();
-                        Xkeys.BLOff(2);
-                    }
+                    StopStartCandTimer(2);
+                   
                     //print_state();
                 }
                 // if (count[2]) clots[2] = (DateTime.Now.Subtract(clotsLast[2]));//.Add(clotsTotal[2]);
@@ -494,20 +457,7 @@ namespace Game2
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D4) & !previousState.IsKeyDown(Keys.D4))
                 {
-                    count[3] = !count[3];
-                    if (count[3])
-                    {
-                        swTotals[3].Startw();
-                        swPartTotals[3].Startw();
-                        Xkeys.BLOn(3);
-                    }
-                    else
-                    {
-                        swTotals[3].Stopw();
-                        swPartTotals[3].Stopw();
-                        saveState();
-                        Xkeys.BLOff(3);
-                    }
+                    StopStartCandTimer(3);
                 }
                 //print_state();
                 //if (count[3]) clots[3] = (DateTime.Now.Subtract(clotsLast[3]));//.Add(clotsTotal[3]);
@@ -515,58 +465,17 @@ namespace Game2
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D5) & !previousState.IsKeyDown(Keys.D5))
                 {
-                    count[4] = !count[4];
-                    if (count[4])
-                    {
-                        swTotals[4].Startw();
-                        swPartTotals[4].Startw();
-                        Xkeys.BLOn(4);
-                    }
-                    else
-                    {
-                        swTotals[4].Stopw();
-                        swPartTotals[4].Stopw();
-                        saveState();
-                        Xkeys.BLOff(4);
-                    }
-                    //print_state();
+                    StopStartCandTimer(4);
                 }
 
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D6) & !previousState.IsKeyDown(Keys.D6))
                 {
-                    count[5] = !count[5];
-                    if (count[5])
-                    {
-                        swTotals[5].Startw();
-                        swPartTotals[5].Startw();
-                        Xkeys.BLOn(5);
-                    }
-                    else
-                    {
-                        swTotals[5].Stopw();
-                        swPartTotals[5].Stopw();
-                        saveState();
-                        Xkeys.BLOff(5);
-                    }
-                    //print_state();
+                    StopStartCandTimer(5);
                 }
+
                 if (!state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.D7) & !previousState.IsKeyDown(Keys.D6))
                 {
-                    count[6] = !count[6];
-                    if (count[6])
-                    {
-                        swTotals[6].Startw();
-                        swPartTotals[6].Startw();
-                        Xkeys.BLOn(6);
-                    }
-                    else
-                    {
-                        swTotals[6].Stopw();
-                        swPartTotals[6].Stopw();
-                        saveState();
-                        Xkeys.BLOff(6);
-                    }
-                    //print_state();
+                    StopStartCandTimer(6);
                 }
                 //§§ if (count[4]) clots[4] = (DateTime.Now.Subtract(clotsLast[4]));//1.Add(clotsTotal[4]);
 
@@ -579,10 +488,6 @@ namespace Game2
                     if (totalTime.TotalMilliseconds > 0) percs[i] = Math.Round(((((swTotals[i]).ElapsedTimeSpan.TotalMilliseconds) * 1000) / ((totalTime.TotalMilliseconds))) / 10f).ToString() + "%";
                     //Debug.WriteLine(i + ", " + percs[i] + ", " + swTotals[i].ElapsedTimeSpan.TotalMilliseconds.ToString() + ", " + totalTime.Ticks);
                 }
-
-
-                
-                
 
                 if (countdown == true)
                 {
@@ -605,6 +510,25 @@ namespace Game2
             cl0 = clots[0].ToString();
             base.Update(gameTime);
             previousState = state;
+        }
+
+        private void StopStartCandTimer(int i)
+        {
+            count[i] = !count[i];
+            if (count[i])
+            {
+                swTotals[i].Startw();
+                swPartTotals[i].Startw();
+                Xkeys.BLOn(i);
+            }
+            else
+            {
+                swTotals[i].Stopw();
+                swPartTotals[i].Stopw();
+                saveState();
+                Xkeys.BLOff(i);
+            }
+           
         }
 
         private void resetClock()
