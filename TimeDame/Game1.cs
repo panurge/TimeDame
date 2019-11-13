@@ -28,7 +28,7 @@ namespace Game2
         private SpriteFont font1, font2, font3;
         TimeSpan tSpan;
         DateTime startTime;
-        static int numCand = 7;
+        static int numCand = 5;
         DateTime[] clotsLast = new DateTime[numCand];
         TimeSpan[] clots = new TimeSpan[numCand];
         TimeSpan[] clotsPartTotal = new TimeSpan[numCand];
@@ -39,7 +39,7 @@ namespace Game2
         StopWatchWithOffset[] swPartTotals = new StopWatchWithOffset[numCand];
 
         string[] codgers = { "Andrew", "Kirsty", "Carwyn", "Leanne", "Neil", "ploo" }; //new string[5];
-        string[] geezers = { "Carwyn", "Andrew", "Leanne", "Neil", "Mark", "Andrew", "Kirsty", "Carwyn", "Leanne", "Neil", "ploo" };
+        string[] geezers = { "Mark", "Leanne", "Carwyn", "Andrew", "Neil", "Mark", "Andrew", "Kirsty", "Carwyn", "Leanne", "Neil", "ploo" };
 
         bool[] count = { false, false, false, false, false, false, false, false, false };
         string[] percs = { "0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%", "0%" };
@@ -366,19 +366,19 @@ namespace Game2
                     resetClock();
                 }
 
-                ////Cntrl R
-                //if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.R) & !previousState.IsKeyDown(Keys.R)) // & state.IsKeyDown(Keys.LeftAlt)
-                //{
-                //    Debug.WriteLine("Reset");
-                //    for (int i = 0; i < numCand; i++)
-                //    {
-                //        swTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
-                //        swPartTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
-                //        percs[i] = "0%";
+                //Cntrl R
+                if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.R) & !previousState.IsKeyDown(Keys.R)) // & state.IsKeyDown(Keys.LeftAlt)
+                {
+                    Debug.WriteLine("Reset");
+                    for (int i = 0; i < numCand; i++)
+                    {
+                        swTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
+                        swPartTotals[i] = new StopWatchWithOffset(TimeSpan.FromSeconds(0));
+                        percs[i] = "0%";
 
-                //    }
-                //    totalTime = TimeSpan.Parse("0");
-                //}
+                    }
+                    totalTime = TimeSpan.Parse("0");
+                }
 
                 if (state.IsKeyDown(Keys.LeftControl) & state.IsKeyDown(Keys.A) & !previousState.IsKeyDown(Keys.A)) // & state.IsKeyDown(XnaKeys.LeftAlt)
                 {
