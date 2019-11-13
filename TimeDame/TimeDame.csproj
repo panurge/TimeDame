@@ -73,7 +73,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Config.txt" />
+    <Content Include="Content\Config.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\TextFile1.txt" />
     <Content Include="Icon.ico" />
     <Content Include="ScreenRes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

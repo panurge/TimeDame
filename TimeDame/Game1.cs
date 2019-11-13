@@ -28,7 +28,7 @@ namespace Game2
         private SpriteFont font1, font2, font3;
         TimeSpan tSpan;
         DateTime startTime;
-        static int numCand = 5;
+        static int numCand = 10;
         DateTime[] clotsLast = new DateTime[numCand];
         TimeSpan[] clots = new TimeSpan[numCand];
         TimeSpan[] clotsPartTotal = new TimeSpan[numCand];
@@ -59,7 +59,7 @@ namespace Game2
         public Texture2D mugshot { get; private set; }
         public bool logoOnOff = true;
 
-        public bool clockOnOff = true;
+        public bool clockOnOff = false;
         public bool fullscreen = false;
 
         public string counterduration = "00:00:45"; //{ get; private set; }
@@ -147,6 +147,8 @@ namespace Game2
                 Xkeys.BLAllOff();
             }
             catch { }
+            
+            LoadConfig();
 
             for (int i = 0; i < numCand; i++)
             {
@@ -163,9 +165,21 @@ namespace Game2
             // clots[1] = TimeSpan.Parse("00:05:23");
             //clots[2] = TimeSpan.Parse("00:03:55");
             previousState = Keyboard.GetState();
+
             resetClock();
         }
+        private void LoadConfig()
+        {
+            //throw new NotImplementedException();
 
+            Debug.WriteLine("Load Config");
+            int j = 0;
+            string[] lines = new string[5]; ;
+            foreach (string line in File.ReadLines("Content\\Config.txt")) lines[j++] = line;
+
+            geezers = lines[0].Split(',');
+            numCand = geezers.Length;
+        }
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
