@@ -13,7 +13,7 @@ using System.Threading;
 using System.Timers;
 using TimeDame;
 //using System.Data.SqlClient;
-
+//using System.Windows.Forms;
 
 namespace Game2
 {
@@ -129,8 +129,14 @@ namespace Game2
 
             mailMessage.To.Add("keith.jones@itv.com");
             //mailMessage.To.Add("Lynwen.James@itv.com");
-
-            smtpClient.Send(mailMessage);
+            try
+            {
+                smtpClient.Send(mailMessage);
+            }
+            catch
+            {
+                MessageBox.Show("Coldn ot send email", "",new[] { "OK" });
+            }
         }
 
         /// <summary>
@@ -278,12 +284,17 @@ namespace Game2
                     temptime += "9";
 
                 }
-                if (state.IsKeyDown(Keys.Enter) & !previousState.IsKeyDown(Keys.Enter)) // & state.IsKeyDown(Keys.LeftAlt)
+                if (state.IsKeyDown(Microsoft.Xna.Framework.Input.Keys.Enter) & !previousState.IsKeyDown(Keys.Enter)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
-                    Debug.WriteLine(temptime);
+                    Debug.WriteLine("On enter "+temptime);
                     try
                     {
                         int l = temptime.Length;
+                        if (l < 4)
+                        {
+                            MessageBox.Show("Enter 4 digits", "Enter 4 digits", new[] { "OK" });
+                            
+                        }
                         char[] chars = temptime.ToCharArray();
                         counterduration = "00:";
                         counterduration += chars[l - 4].ToString();
@@ -299,8 +310,12 @@ namespace Game2
                         resetClock();
 
                     }
-                    catch { }
-                    Debug.WriteLine(counterduration);
+                    catch(Exception e) {
+                        Debug.WriteLine("Failed to convert counterduration to timespan" + e.Message);
+                        counterduration = "00:00:45";
+
+                    }
+                    Debug.WriteLine("In enter after string conversion "+counterduration);
 
                 }
 
@@ -353,9 +368,23 @@ namespace Game2
                     loadTotals();
 
                 }
-                if (state.IsKeyDown(Keys.G) & !previousState.IsKeyDown(Keys.G)) // & state.IsKeyDown(Keys.LeftAlt)
+                if (state.IsKeyDown(Keys.H) & !previousState.IsKeyDown(Keys.H)) // & state.IsKeyDown(Keys.LeftAlt)
                 {
                     //loadState();
+                    String help = @"1 - Start/Stop Candidate 1
+                      2 - Start/Stop Candidate 2
+                      3 - Start/Stop Candidate 3
+                      4 - Start/Stop Candidate 4
+                      5 - Start/Stop Candidate 5    
+                      H - Help
+                      Cntrl I - Logo On/Off
+                      Cntrl K - Clock On/Off
+                      Cntrl P - Programme Part to split timings
+                      Cntrl R - Reset everything
+                      S - start clock
+                                    ";
+                    string helpTrimmed = string.Join("\n", help.Split('\n').Select(s => s.Trim()));
+                    MessageBox.Show("Help", helpTrimmed, new[] { "OK" });
                 }
                 if (state.IsKeyDown(Keys.S) & !previousState.IsKeyDown(Keys.S)) // & state.IsKeyDown(Keys.LeftAlt)
                 { 
@@ -363,6 +392,7 @@ namespace Game2
                     Debug.WriteLine("In Start Main Clock");
                     countdown = true;
                     clockOnOff = true;
+                    Debug.WriteLine(counterduration);
                     startTime = DateTime.Now.Add(TimeSpan.Parse(counterduration));
                     //startClock();
                     Xkeys.BLOn(6);
